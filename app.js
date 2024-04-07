@@ -25,3 +25,7 @@ dbConnection.getConnection((err, connection) => {
     console.log("Database connected");
   }
 });
+ 
+app.listen(3000,() => {
+  console.log("3000 çalıştı");
+});
