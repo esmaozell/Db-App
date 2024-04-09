@@ -4,8 +4,36 @@ const dbConnection = require("./helper/mysql");
 
 const app = express();
 
-app.get("/students", (req, res) => {
-  dbConnection.query("SELECT * FROM students", (err, results, fields) => {
+app.get("/Students", (req, res) => {
+  dbConnection.query("SELECT * FROM Students", (err, results, fields) => {
+    if (err) {
+      console.log("Database query error: ", err);
+    } else {
+      res.status(200).json({
+        status: "success",
+        data: results,
+      });
+    }
+  });
+});
+
+app.get("/Students/Add/:name/:age/:midterm_grade/:final_grade", (req, res) => {
+  dbConnection.query("INSERT INTO Students (name, age,   midterm_Grade, final_Grade) VALUES (?, ?, ?, ?)",
+  [req.params.name, req.params.age, req.params.midterm_grade, req.params.final_grade], (err, results, fields) => {
+    if (err) {
+      console.log("Database query error: ", err);
+    } else {
+      res.status(200).json({
+        status: "success",
+        data: results,
+      });
+    }
+  });
+});
+
+app.delete("/Students/Delete/:id", (req, res) => {
+  dbConnection.query("DELETE FROM Students WHERE id = ?",
+  [req.params.id], (err, results, fields) => {
     if (err) {
       console.log("Database query error: ", err);
     } else {
